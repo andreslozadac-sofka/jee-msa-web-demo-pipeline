@@ -159,3 +159,17 @@ stages:
           - script: |
               echo "Estado final de la ejecución del pipeline construido por Jeferson Villacís: $(Agent.JobStatus)"
             displayName: 'Simulación de Envío de Correo Electrónico'
+  # ==========================================
+  # STAGE 5: FINALIZACIÓN
+  # ==========================================
+  - stage: Finalization
+    displayName: 'Finalización'
+    dependsOn: [CI, Approval, CD, Notifications]
+    condition: always()
+    jobs:
+      - job: final_steps
+        displayName: 'Pasos Finales'
+        steps:
+          - script: |
+              echo "Pipeline finalizado con estado: $(Agent.JobStatus)"
+            displayName: 'Mostrar Estado Final'
